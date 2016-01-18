@@ -1,7 +1,14 @@
-.str {
-  padding: 10px;
-  border: 2px solid black;
+* {
+  margin: 0;
+  padding: 0;
 }
-.str .label {
-  font-weight: bold;
+.box {
+  padding: 4px 8px;
+  margin-bottom: 5px;
+  background: #f0f0f0;
+}
+.coll .coll-items {
+  margin: 5px;
+  background: white;
+  padding: 4px 8px 1px;
 }

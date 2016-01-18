@@ -1,28 +1,60 @@
 ;(function(){
-	
-	strings = {};
-
-
-$(function(){
-	var $controls = $("<div>").addClass('controls').appendTo('body');
-	var $label = $("<input>").appendTo($controls);
-	var $create = $("<button>").html('add').appendTo($controls).click(function(){
-		var newStr = str.clone({ name: $label.val() });
-		strings[$label.val()] = newStr;
-		$label.val('');
-	});
-
-	myStr = str.clone({
-		name: 'myStr'
-	});
-	myStr.add('one', 'one');
-	myStr.add('two', '2');
-	myStr.save();
+var $body;
+App = Coll.clone({
+	path: function(){
+		return ["App"];
+	},
+	$parent: window,
+	prop: "App",
+	rerender: function(){
+		this.$el.remove();
+		$body.append(this.render());
+	}
 });
 
-	// Test1 = HTMLElement.clone({
-	// 	name: "Test1"
-	// });
+$(function(){
+	$body = $("body");
+	App.add(Item.clone({
+		prop: "myItem",
+		$parent: App
+	}));
 
-	// Test1.addClass('test1');
+	var item = App.myItem;
+	item.set('test1', 1);
+
+	// console.log(item);
+
+	var item2 = item.fork({
+		prop: "item2"
+	});
+
+	item2.set('test1', 2);
+	// console.log(item2);
+
+	App.add(Coll.clone({
+		prop: "myColl",
+		$parent: App
+	}));
+
+	var coll = App.myColl;
+	coll.add(item);
+	coll.add(item2);
+
+	// console.log(App.data());
+
+	App2 = App.fork({
+		prop: "App2",
+		path: function(){
+			return ["App2"];
+		},
+		$parent: window
+	});
+
+	// console.log(App2.data())
+
+
+
+	App.render($body);
+});
+
 })();
